@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        body, html{
+            background: #222222;
+            font-family: 'Lato', sans-serif;
+            color: #f1f1f1;
+        }
+        .container{
+            display: block;
+            position: relative;
+            margin: 0 auto;
+            height: auto;
+            width: 600px;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            font-size: 36px;
+	        color: #AAAAAA;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class='container'>
+        <h2>{{poll.question}}</h2>
+        <div id='myChart'></div>
+        <canvas id="myChartsss" width="400" height="234"></canvas>
+    </div>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script>
+        var state ={	
+            'items':[],
+            'values':[],
+        }
+        $(document).ready(function(){
+            var pollId = '{{poll.id}}'
+            var apiUrl = '/api/data/'+pollId+'/'
+            var question = '{{poll.question}}'
+            $.ajax({
+                method: 'GET',
+                url: apiUrl,
+                success: function(data){
+                    options = [data.option1,data.option2,data.option3]
+                    values = [data.option1_count,data.option2_count,data.option3_count]
+                    state.items = options
+                    state.values = values
+                    buildChart()
+                }
+            })
+        })
+        function buildChart(){
+                var chartData = {
+                "type":"bar",
+                "theme": 'dark',
+                legend: {},
+                // plot represents general series, or plots, styling
+                plot: {
+                    styles: [ "#e84118", "#0097e6", "#fbc531" ],
+                    // animation docs here:
+                    // https://www.zingchart.com/docs/tutorials/design-and-styling/chart-animation/#animation__effect
+                    animation: {
+                        effect: 'ANIMATION_EXPAND_BOTTOM',
+                        method: 'ANIMATION_STRONG_EASE_OUT',
+                        sequence: 'ANIMATION_BY_NODE',
+                        speed: 275
+                    }
+                },
+                "scale-x":{
+                    "values":state.items
+                },
+                "series":[
+                    {
+                        "values":state.values
+                    }
+                ]
+            }
+    
+    
+            zingchart.render({
+              id: "myChart",
+              data: chartData,
+            });
+        }
+    </script>
+</body>
+</html>

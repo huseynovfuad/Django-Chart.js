@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        body, html{
+            background: #222222;
+            font-family: 'Lato', sans-serif;
+            color: #f1f1f1;
+        }
+    .container{
+        display: block;
+        position: relative;
+        margin: 20px auto;
+        height: auto;
+        width: 600px;
+        padding: 20px;
+    }
+    h2 {
+        text-align: center;
+        font-size: 36px;
+	    color: #AAAAAA;
+    }
+    .pollQuestion{
+        font-weight: bold;
+        font-size: 18px;
+    }
+    ul.lists li{
+        list-style-type: none;
+        margin: 38px 0;
+    }
+    ul.lists li a{
+        font-weight: bold;
+        border: 0;
+        background: none;
+        outline: none;
+        margin: 0 13px;
+        float:right;
+        color: #f1f1f1;
+        text-decoration: none;
+        padding: 7px 15px;
+        border-radius: 25px;
+    }
+    .results{
+        border: 3px solid #d35400;
+    }
+    .results:hover{
+        background-color: #d35400;
+    }
+    .votes{
+        border: 3px solid #27ae60;
+    }
+    .votes:hover{
+        background-color: #27ae60;
+    }
+    </style>
+</head>
+<body>
+
+{% include 'navbar.html' %}
+
+<div class='container'>
+    <h2>Polls</h2>
+    <ul class='lists'>
+        {% for poll in polls %}
+        <li>
+            <div class='pollQuestion'>
+                <strong class='pollQuestion'>{{poll.question}}</strong>
+                <a href='{% url "poll-results" poll.id %}' class='results'>Results</a>
+                <a href='{% url "poll-vote" poll.id %}' class='votes'>Vote</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+<style>
+    body, html{
+        background: #222222;
+	    font-family: 'Lato', sans-serif;
+    }
+    .container{
+    display: block;
+    position: relative;
+    margin: 20px auto;
+    height: auto;
+    width: 600px;
+    padding: 20px;
+    }
+    h2 {
+        text-align: center;
+        font-size: 36px;
+        color: #AAAAAA;
+    }
+    form textarea{
+        resize:vertical;
+        border-radius: 0 0 25px 0;
+        color:#3c3c3c;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight:500;
+        font-size: 18px;
+        line-height: 22px;
+        background-color: #fbfbfb;
+        padding: 13px 13px 13px 54px;
+        margin-bottom: 10px;
+        width:100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 3px solid rgba(0,0,0,0);
+    }
+    .formOptions input{
+        float: left;
+        color:#3c3c3c;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight:500;
+        font-size: 14px;
+        padding: 6px 15px;
+        line-height: 22px;
+        background-color: #fbfbfb;
+        border: 3px solid rgba(0,0,0,0);
+    }
+    input[name='option1']{
+        margin-right: 4px;
+    }
+    input[name='option2']{
+        margin: 0 4px;
+    }
+    input[name='option3']{
+        margin-left: 4px;
+    }
+    #submitBtn{
+        border: 0;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        text-align: center;
+        border: 2px solid #0984e3;
+        padding: 14px 40px;
+        outline: none;
+        color: #f1f1f1;
+        border-radius: 24px;
+        transition: 0.25s;
+        cursor: pointer;
+    }
+    #submitBtn:hover{
+        background-color: #0984e3;
+    }
+    #submitBtn:active{
+        transform: scale(0.95);
+    }
+</style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class='container'>
+        <h2>Create a Poll</h2>
+        <form method='POST'>
+            {% csrf_token %}
+            {{form.question}}
+            <div class='formOptions'>
+                {{form.option1}}
+                {{form.option2}}
+                {{form.option3}}
+            </div>
+            <br><br><br>
+            <input type='submit' value='Create' id='submitBtn'>
+        </form>
+
+        
+    </div>
+
+</body>
+</html>
